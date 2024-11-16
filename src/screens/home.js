@@ -18,10 +18,9 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'cc0663',
+    backgroundColor: '#cc0633',
   },
   button: { 
     maxWidth: '100%',
