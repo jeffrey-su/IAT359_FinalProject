@@ -4,8 +4,8 @@ import CollectionList from "./src/screens/collectionList";
 import LoginScreen from "./src/screens/login";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-
+import { firebase_auth } from "./src/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
 
 
 export default function App() {
