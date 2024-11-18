@@ -48,16 +48,15 @@ export default function LoginScreen({ navigation }) {
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Camera")}
+        onPress={() => navigation.navigate("Home")}
       >
         <Text style={[{color: '#fff'}]}>Log In</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Camera")}
+        onPress={() => navigation.navigate("Home")}
       >
-        <Text style={[{color: '#fff'}]}>Create an account</Text>
+        <Text style={[{color: '#fff'}]} onPress={handleSignUp}>Create an account</Text>
       </TouchableOpacity>
-      <Button title="Sign Up" onPress={handleSignUp} />
     </SafeAreaView>
   );
 }
