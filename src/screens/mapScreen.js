@@ -1,16 +1,48 @@
+import * as Location from "expo-location";
 import { StatusBar } from 'expo-status-bar';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+
 export default function MapScreen({ navigation }) {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [searchLocation, setSearchLocation] = useState(null);
+
+  useEffect(() => {
+    // determining current location
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      if (location) {
+        setLocation(location);
+        console.log(location);
+      } else {
+        setErrorMsg("Current location not obtained");
+        return;
+      }
+    })();
+  }, []);
+  
+
   return (
     <View style={styles.container}>
-        <Text style={[{fontSize: 25, padding: 30}]}>QR Collector</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("Camera")}
-      >
-        <Text>Press Here To Start Collecting</Text>
-      </TouchableOpacity>
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: 49.1874929575383, 
+            longitude:-122.84976272346668,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          showsMyLocationButton
+          showsUserLocation
+        />
     </View>
   );
 }
@@ -35,5 +67,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     elevation: 3,
 
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
   },
 });
