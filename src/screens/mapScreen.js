@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 
 export default function MapScreen({ navigation }) {
   const [location, setLocation] = useState(null);
@@ -45,7 +45,25 @@ export default function MapScreen({ navigation }) {
           }}
           showsMyLocationButton
           showsUserLocation
+        >
+        <Marker 
+          coordinate={{
+            latitude: 49.18726,
+            longitude: -122.84870
+          }}
+          title={"Studio B"}
+        
         />
+        <Marker 
+          coordinate={{
+            latitude: 49.18726020272876, 
+            longitude: -122.85013064932285
+          }}
+          title={"Studio A"}
+        
+        />
+
+        </MapView>
     </View>
   );
 }

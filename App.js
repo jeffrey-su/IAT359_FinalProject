@@ -3,6 +3,7 @@ import HomeScreen from "./src/screens/home";
 import CollectionList from "./src/screens/collectionList";
 import LoginScreen from "./src/screens/login";
 import MapScreen from "./src/screens/mapScreen";
+import CacheList from "./src/screens/cacheList";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -22,6 +23,7 @@ export default function App() {
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Camera" component={CameraScreen}  />
+        <Tab.Screen name="Cache" component={CacheList}  />
         <Tab.Screen name="Collection" component={CollectionList}  />
       </Tab.Navigator>
     );
@@ -38,7 +40,7 @@ export default function App() {
 
   useEffect(() => {
     onAuthStateChanged(firebase_auth, (user) => {
-      console.log("user", user.email);
+      // console.log("user", user.email);
       setUser(user);
     });
   }, []);
@@ -48,7 +50,7 @@ export default function App() {
       <ProStack.Navigator>
         {user ? (
           <ProStack.Screen
-            name="TabNavigator"
+            name="SFU Geocaching"
             component={TabNavigator}
             
           />

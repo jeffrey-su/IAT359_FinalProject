@@ -2,18 +2,28 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { firebase_auth } from "../firebaseConfig";
 
-export default function HomeScreen({ navigation }) {
+export default function CacheList({ navigation }) {
   return (
     <View style={styles.container}>
-        <Text style={[{fontSize: 25, padding: 30, color: '#fff',}]}>SFU GEOCACHING</Text>
+      <Text style={[{fontSize: 25, color: 'white', padding: 30, alignSelf: 'start', }]}>Cache List</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("Camera")}
       >
-        <Text>Press Here To Start Collecting</Text>
+        <Text>Studio B Cache</Text>
       </TouchableOpacity>
-
-      <Button onPress={() => firebase_auth.signOut()} title="Sign Out" />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("Camera")}
+      >
+        <Text>Studio A Cache</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("Camera")}
+      >
+        <Text>SRYC 2740 Cache</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -25,9 +35,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#cc0633',
   },
+
   button: { 
     maxWidth: '100%',
-    minWidth: '80%',
+    minWidth: '90%',
     padding: 30,
     marginVertical: 10,
     backgroundColor: '#f2f2f2',

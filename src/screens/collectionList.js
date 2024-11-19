@@ -5,12 +5,14 @@ export default function CollectionList({ route, navigation }) {
   const [scannedItems, setScannedItems] = useState([]); // use effect arrays to hold qr items
 
   useEffect(() => {
+    if (route.params?.data) { // Only process if data exists
       const newItem = route.params.data;
 
       if (!scannedItems.includes(newItem)) { // add the new item to scannedItems if it doesnt already exist
         const updatedItems = [...scannedItems, newItem]; // keeping the old values so it doesnt override
         setScannedItems(updatedItems); // sets the main array to the new values
       }
+    };
   }, [route.params?.data]); // updates if theres something new in the array
 
   const resetScans = () => {
