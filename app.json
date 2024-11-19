@@ -13,7 +13,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.vennie.QRScanner"
+      "bundleIdentifier": "com.vennie.QRScanner",
+      "config": {
+        "googleMapsApiKey": "AIzaSyCnMP7zlmXsmiAGFAr6oUo_MKJ63TLHG8I"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -24,7 +27,12 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.vennie.QRScanner"
+      "package": "com.vennie.QRScanner",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCnMP7zlmXsmiAGFAr6oUo_MKJ63TLHG8I"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

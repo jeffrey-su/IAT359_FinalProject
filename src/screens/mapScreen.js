@@ -36,12 +36,11 @@ export default function MapScreen({ navigation }) {
           style={styles.map}
           showsPointsOfInterest={false}
           showsIndoors={true}
-          provider="google"
           initialRegion={{
             latitude: 49.1874929575383, 
             longitude:-122.84976272346668,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitudeDelta: 0.003,
+            longitudeDelta: 0.003,
           }}
           showsMyLocationButton
           showsUserLocation
