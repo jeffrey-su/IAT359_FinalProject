@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import { firebase_auth } from "../firebaseConfig";
 
 export default function HomeScreen({ navigation }) {
   return (
@@ -11,6 +12,8 @@ export default function HomeScreen({ navigation }) {
       >
         <Text>Press Here To Start Collecting</Text>
       </TouchableOpacity>
+
+      <Button onPress={() => firebase_auth.signOut()} title="Sign Out" />
     </View>
   );
 }

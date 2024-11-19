@@ -30,6 +30,17 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
+  const handleSignIn = async () => {
+    try {
+      const response = await signInWithEmailAndPassword(auth, inputtedEmail, inputtedPassword);
+      console.log(response);
+      alert("User: " + inputtedEmail + " signed in");
+    } catch (error) {
+      console.log(error.message);
+      alert(error.message);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
         <Text style={[{fontSize: 25, padding: 30, color: '#fff'}]}>SFU GEOCACHING</Text>
@@ -48,14 +59,14 @@ export default function LoginScreen({ navigation }) {
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Home")}
+        onPress={handleSignIn}
       >
-        <Text style={[{color: '#fff'}]}>Log In</Text>
+        <Text style={[{color: '#fff'}]} >Log In</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Home")}
+        onPress={handleSignUp}
       >
-        <Text style={[{color: '#fff'}]} onPress={handleSignUp}>Create an account</Text>
+        <Text style={[{color: '#fff'}]}>Create an account</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

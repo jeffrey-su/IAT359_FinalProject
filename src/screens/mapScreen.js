@@ -36,7 +36,7 @@ export default function MapScreen({ navigation }) {
           style={styles.map}
           showsPointsOfInterest={false}
           showsIndoors={true}
-          provider="google"
+          //provider="google"
           initialRegion={{
             latitude: 49.1874929575383, 
             longitude:-122.84976272346668,
