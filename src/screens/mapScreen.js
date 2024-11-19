@@ -62,6 +62,14 @@ export default function MapScreen({ navigation }) {
           title={"Studio A"}
         
         />
+        <Marker 
+          coordinate={{
+            latitude: 49.18784777061085, 
+            longitude: -122.85007754430409 
+          }}
+          title={"SRYC 2740"}
+        
+        />
 
         </MapView>
     </View>
