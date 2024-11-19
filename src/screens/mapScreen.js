@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView from "react-native-maps";
 
 export default function MapScreen({ navigation }) {
   const [location, setLocation] = useState(null);
@@ -34,6 +34,9 @@ export default function MapScreen({ navigation }) {
     <View style={styles.container}>
         <MapView
           style={styles.map}
+          showsPointsOfInterest={false}
+          showsIndoors={true}
+          provider="google"
           initialRegion={{
             latitude: 49.1874929575383, 
             longitude:-122.84976272346668,
