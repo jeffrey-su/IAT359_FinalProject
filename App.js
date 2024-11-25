@@ -19,7 +19,7 @@ export default function App() {
 
   function TabNavigator() {
     return (
-      <Tab.Navigator initialRouteName="Home">
+      <Tab.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Camera" component={CameraScreen}  />
@@ -31,7 +31,7 @@ export default function App() {
 
   function StackNavigator() {
     return (
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     );
@@ -47,7 +47,7 @@ export default function App() {
 
   return(
     <NavigationContainer>
-      <ProStack.Navigator>
+      <ProStack.Navigator screenOptions={{ headerShown: false }}>
         {user ? (
           <ProStack.Screen
             name="SFU Geocaching"

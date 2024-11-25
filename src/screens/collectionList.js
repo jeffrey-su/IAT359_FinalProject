@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
 export default function CollectionList({ route, navigation }) {
   const [scannedItems, setScannedItems] = useState([]);
 
   useEffect(() => {
-    // Load scanned items from storage on mount
     const loadScannedItems = async () => {
       try {
         const storedItems = await AsyncStorage.getItem('scannedItems');
