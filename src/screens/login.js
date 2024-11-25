@@ -43,7 +43,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={[{fontSize: 25, padding: 30, color: '#fff'}]}>SFU GEOCACHING</Text>
+        <Text style={[styles.font, {fontSize: 25, padding: 30, color: '#fff'}]}>SFU GEOCACHING</Text>
       
       <TextInput
         style={styles.input}
@@ -73,6 +73,9 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  font:{
+    fontFamily: 'CountachRegular'
+  },
   container: {
     flex: 1,
     alignItems: 'center',

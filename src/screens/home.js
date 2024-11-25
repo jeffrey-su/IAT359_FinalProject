@@ -5,7 +5,10 @@ import { firebase_auth } from "../firebaseConfig";
 export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-        <Text style={[{fontSize: 25, padding: 30, color: '#fff', fontFamily: 'CountachRegular',}]}>SFU GEOCACHING</Text>
+        <Text style={[styles.font, { fontSize: 25, padding: 30, color: '#fff' }]}>
+          SFU GEOCACHING
+        </Text>
+
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("Camera")}

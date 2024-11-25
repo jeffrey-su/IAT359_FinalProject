@@ -12,6 +12,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 
 export default function App() {
+
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
   const ProStack = createNativeStackNavigator();
