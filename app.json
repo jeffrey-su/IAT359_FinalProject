@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "QRScanner",
-    "slug": "QRScanner",
+    "name": "SFUGeocaching",
+    "newArchEnabled": true,
+    "slug": "SFUGeocaching",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.vennie.QRScanner",
+      "bundleIdentifier": "com.vennie.SFUGeocaching",
       "config": {
         "googleMapsApiKey": "AIzaSyCnMP7zlmXsmiAGFAr6oUo_MKJ63TLHG8I"
       }
@@ -27,7 +28,7 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.vennie.QRScanner",
+      "package": "com.vennie.SFUGeocaching",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyCnMP7zlmXsmiAGFAr6oUo_MKJ63TLHG8I"
@@ -46,7 +47,13 @@
           "recordAudioAndroid": true
         }
       ],
-      "expo-font"
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/CountachRegular.otf"]
+        }
+      ],
+      "expo-asset"
     ]
   }
 }

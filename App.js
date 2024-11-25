@@ -10,6 +10,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { firebase_auth } from "./src/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 
 export default function App() {
 
@@ -45,6 +47,21 @@ export default function App() {
       setUser(user);
     });
   }, []);
+
+  const [loaded, error] = useFonts({
+    'CountachRegular': require('./assets/fonts/CountachRegular.otf'),
+    'DinRegular': require('./assets/fonts/dinpro.otf'),
+  });
+
+  useEffect(() => {
+    if (loaded || error) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, error]);
+
+  if (!loaded && !error) {
+    return null;
+  }
 
   return(
     <NavigationContainer>
