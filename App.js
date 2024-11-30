@@ -12,6 +12,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function App() {
 
@@ -22,12 +23,12 @@ export default function App() {
 
   function TabNavigator() {
     return (
-      <Tab.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Map" component={MapScreen} />
-        <Tab.Screen name="Camera" component={CameraScreen}  />
-        <Tab.Screen name="Cache" component={CacheList}  />
-        <Tab.Screen name="Collection" component={CollectionList}  />
+      <Tab.Navigator initialRouteName="Home" screenOptions={{ headerShown: false , tabBarActiveTintColor: "#A6192E", tabBarStyle: {backgroundColor:"white"}, }}>
+        <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarLabel: 'Home', tabBarIcon: ({ color, size }) => ( <Ionicons name="home" color={color} size={size} />),}}/>
+        <Tab.Screen name="Map" component={MapScreen} options={{ tabBarLabel: 'Map', tabBarIcon: ({ color, size }) => ( <Ionicons name="map" color={color} size={size} />),}}/>
+        <Tab.Screen name="Camera" component={CameraScreen} options={{ tabBarLabel: 'Camera', tabBarIcon: ({ color, size }) => ( <Ionicons name="camera" color={color} size={size} />),}} />
+        <Tab.Screen name="Cache" component={CacheList} options={{ tabBarLabel: 'Cache', tabBarIcon: ({ color, size }) => ( <Ionicons name="menu" color={color} size={size} />),}} />
+        <Tab.Screen name="Collection" component={CollectionList} options={{ tabBarLabel: 'Profile', tabBarIcon: ({ color, size }) => ( <Ionicons name="person" color={color} size={size} />),}} />
       </Tab.Navigator>
     );
   }
