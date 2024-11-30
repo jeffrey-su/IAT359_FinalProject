@@ -48,12 +48,15 @@ export default function LoginScreen({ navigation }) {
       <TextInput
         style={styles.input}
         placeholder='email'
+        placeholderTextColor="#aaa"
         onChangeText={newText => setInputtedEmail(newText)}
         defaultValue={inputtedEmail}
       />
       <TextInput
         style={styles.input}
+        secureTextEntry={true}
         placeholder='password'
+        placeholderTextColor="#aaa"
         onChangeText={newText => setInputtedPassword(newText)}
         defaultValue={inputtedPassword}
       />
