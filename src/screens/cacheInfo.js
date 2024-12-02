@@ -12,7 +12,7 @@ export default function CacheInfo({ navigation, route}) {
 
     // function to retrieve all comments from the database
     async function getComments() {
-        const querySnapshot = await getDocs(collection(db, "StudioACache"));
+        const querySnapshot = await getDocs(collection(db, pagename));
         let allcomments = []; // for display in text box
         querySnapshot.forEach((doc) => {
           console.log(doc.id, "=>", doc.data());
