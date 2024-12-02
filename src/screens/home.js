@@ -1,13 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Button, Image } from 'react-native';
 import { firebase_auth } from "../firebaseConfig";
 
 export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-        <Text style={[styles.font, { fontSize: 25, padding: 30, color: '#fff' }]}>
-          SFU GEOCACHING
-        </Text>
+        <View style={{flexDirection: 'row'}}>
+          <Image source={require('../../assets/logo.png') } style={styles.logo}/>
+          <Text style={[{fontSize: 35, padding: 30, color: '#fff', fontFamily: 'CountachRegular',}]}>SFU {'\n'}GEOCACHING </Text>
+        </View>
+        
 
       <TouchableOpacity
         style={styles.button}
@@ -45,4 +47,11 @@ const styles = StyleSheet.create({
     elevation: 3,
 
   },
+  logo:{
+    marginTop: 30, 
+    marginLeft: 30, 
+    marginRight: -20, 
+    width: 60, 
+    height: 60,
+  }
 });

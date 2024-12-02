@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, TextInput, Image } from 'react-native';
 import React, {useState, useEffect} from 'react';
 
 import {
@@ -43,7 +43,11 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={[{fontSize: 35, padding: 30, color: '#fff', fontFamily: 'CountachRegular',}]}>SFU {'\n'}GEOCACHING </Text>
+      <View style={{flexDirection: 'row'}}>
+        <Image source={require('../../assets/logo.png')} style={styles.logo}/>
+      <Text style={[{fontSize: 35, padding: 30, color: '#fff', fontFamily: 'CountachRegular',}]}>SFU {'\n'}GEOCACHING </Text>
+      </View>
+        
       
       <TextInput
         style={styles.input}
@@ -102,4 +106,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 7,
   },
+  logo:{
+    marginTop: 30, 
+    marginLeft: -30, 
+    marginRight: -20, 
+    width: 60, 
+    height: 60,
+  }
 });
