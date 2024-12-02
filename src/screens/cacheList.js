@@ -1,27 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { firebase_auth } from "../firebaseConfig";
+import { useState } from "react";
 
 export default function CacheList({ navigation }) {
+
+  const [pagename, setpageName] = useState("StudioA");
+  
   return (
     <View style={styles.container}>
       <Text style={[{fontSize: 30, color: 'white', padding: 30, alignSelf: 'start', fontFamily: 'CountachRegular'}]}>Cache List</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Camera")}>
+        onPress={() => navigation.navigate("Cache Info", {pagename: "STUDIO B",})}>
         <Image></Image>
         <Text>Studio B Cache</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Camera")}
+        onPress={() => navigation.navigate("Cache Info", {pagename: "STUDIO A",})}
       >
         <Text>Studio A Cache</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Camera")}
+        onPress={() => navigation.navigate("Cache Info", {pagename: "ROOM 2740",})}
       >
         <Text>SRYC 2740 Cache</Text>
       </TouchableOpacity>
