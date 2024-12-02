@@ -34,7 +34,7 @@ export default function LoginScreen({ navigation }) {
     try {
       const response = await signInWithEmailAndPassword(auth, inputtedEmail, inputtedPassword);
       console.log(response);
-      alert("User: " + inputtedEmail + " signed in");
+      // alert("User: " + inputtedEmail + " signed in");
     } catch (error) {
       console.log(error.message);
       alert(error.message);
@@ -51,7 +51,7 @@ export default function LoginScreen({ navigation }) {
       
       <TextInput
         style={styles.input}
-        placeholder='email'
+        placeholder='Email'
         placeholderTextColor="#aaa"
         onChangeText={newText => setInputtedEmail(newText)}
         defaultValue={inputtedEmail}
@@ -59,7 +59,7 @@ export default function LoginScreen({ navigation }) {
       <TextInput
         style={styles.input}
         secureTextEntry={true}
-        placeholder='password'
+        placeholder='Password'
         placeholderTextColor="#aaa"
         onChangeText={newText => setInputtedPassword(newText)}
         defaultValue={inputtedPassword}
