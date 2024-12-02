@@ -113,10 +113,10 @@ export default function MapScreen({ navigation }) {
   const [locationSubscription, setLocationSubscription] = useState(null); // Subscription for live updates
 
   const [mapRegion, setMapRegion] = useState({
-    latitude: 49.1865929575383,
-    longitude: -122.84976272346668,
-    latitudeDelta: 0.004, // Larger delta to fit the screen
-    longitudeDelta: 0.004,
+    latitude: 49.18668329575383,
+    longitude: -122.8498497234666,
+    latitudeDelta: 0.003, // Larger delta to fit the screen
+    longitudeDelta: 0.005,
   });
 
   useEffect(() => {
@@ -133,7 +133,7 @@ export default function MapScreen({ navigation }) {
         {
           accuracy: Location.Accuracy.High,
           timeInterval: 1000, // Update every second
-          distanceInterval: 1, // Update every 1 meter
+          distanceInterval: 0.5, // Update every 1 meter
         },
         (currentLocation) => {
           setLocation(currentLocation.coords);
@@ -159,12 +159,12 @@ export default function MapScreen({ navigation }) {
       title: "Studio B",
     },
     {
-      coordinate: { latitude: 49.18757302655212, longitude: -122.84973148503786 },
+      coordinate: { latitude: 49.18768302655212, longitude: -122.85073148503786 },
       title: "Studio A",
     },
     {
-      coordinate: { latitude: 49.187074477539625, longitude: -122.8490 },
-      title: "SRYC 3310",
+      coordinate: { latitude: 49.186874477539625, longitude: -122.8490560924 },
+      title: "SRYC 3100",
     },
   ];
 
@@ -184,19 +184,19 @@ export default function MapScreen({ navigation }) {
         showsUserLocation
       >
         {/* Image Overlay */}
-        {/* <Overlay
+        <Overlay
           image={require("../../assets/mapOverlayL.png")} // Replace with your image file path
           bounds={[
             [
-              mapRegion.latitude - mapRegion.latitudeDelta / 4, // Southwest corner
-              mapRegion.longitude - mapRegion.longitudeDelta / 4,
+              mapRegion.latitude - mapRegion.latitudeDelta / 1, // Southwest corner
+              mapRegion.longitude - mapRegion.longitudeDelta / 1,
             ],
             [
-              mapRegion.latitude + mapRegion.latitudeDelta / 4, // Northeast corner
-              mapRegion.longitude + mapRegion.longitudeDelta / 4,
+              mapRegion.latitude + mapRegion.latitudeDelta / 1, // Northeast corner
+              mapRegion.longitude + mapRegion.longitudeDelta / 1,
             ],
           ]}
-        /> */}
+        />
 
         {/* Interactive Markers */}
         {markers.map((marker, index) => (
