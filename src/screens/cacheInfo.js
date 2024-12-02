@@ -1,9 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
 import { firebase_auth } from "../firebaseConfig";
+import { firebase_app } from "../firebaseConfig";
 import { db } from "../firebaseConfig";
 import { useState } from "react";
 import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/firestore";
+import "firebase/app";
+
+import "firebase/auth";
 
 export default function CacheInfo({ navigation, route}) {
 
@@ -31,6 +35,7 @@ export default function CacheInfo({ navigation, route}) {
             const docRef = doc(collection(db, pagename));
             setDoc(docRef, {
               commentcontent: inputtedComment,
+              username: firebase_auth.currentUser.email,
             });
             console.log("Document written with ID: ", docRef.id);
             setInputtedComment("");
