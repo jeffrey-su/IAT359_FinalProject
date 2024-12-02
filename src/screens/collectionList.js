@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CollectionList({ route, navigation }) {
   const [scannedItems, setScannedItems] = useState([]);
@@ -62,9 +62,11 @@ export default function CollectionList({ route, navigation }) {
       >
         <Text style={styles.buttonText}>Back to Scanner</Text>
       </TouchableOpacity>
-      {/* <TouchableOpacity onPress={resetScans} style={styles.resetButton}>
-        <Text style={styles.buttonText}>Reset Scans</Text>
-      </TouchableOpacity> */}
+
+      {/* New Clear Data Button */}
+      <TouchableOpacity onPress={resetScans} style={[styles.resetButton, { backgroundColor: 'red' }]}>
+        <Text style={styles.buttonText}>Clear All Data</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
