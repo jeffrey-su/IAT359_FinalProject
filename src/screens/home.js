@@ -10,15 +10,18 @@ export default function HomeScreen({ navigation }) {
           <Text style={[{fontSize: 35, padding: 30, color: '#fff', fontFamily: 'CountachRegular',}]}>SFU {'\n'}GEOCACHING </Text>
         </View>
         
-
+        <Text style={{fontFamily: 'DinRegular', color: '#fff', maxWidth: '60%', fontSize: 17}}>Geocaching is a real-world puzzle solving game where players 
+          explore urban or natural areas in search of small 'caches' or artifacts with the help of an app or compass. {'\n\n'}
+          SFU Geocaching focuses on the Surrey Campus of Simon Fraser University, as you explore the campus using the map, path your way around using 
+          the markers as a guide to find a cache and add it to your collection.</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Camera")}
+        onPress={() => navigation.navigate("Map")}
       >
-        <Text>Press Here To Start Collecting</Text>
+        <Text style={{fontFamily: 'CountachRegular', color: '#cc0633', fontSize: '24'}}>Tap to Begin</Text>
       </TouchableOpacity>
 
-      <Button onPress={() => firebase_auth.signOut()} title="Sign Out" />
+      {/* <Button onPress={() => firebase_auth.signOut()} title="Sign Out" /> */}
     </View>
   );
 }
@@ -34,9 +37,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#cc0633',
   },
   button: { 
-    maxWidth: '100%',
-    minWidth: '80%',
-    padding: 30,
+    marginTop: 30,
+    maxWidth: '60%',
+    minWidth: '60%',
+    padding: 20,
     marginVertical: 10,
     backgroundColor: '#f2f2f2',
     borderRadius: 8,
