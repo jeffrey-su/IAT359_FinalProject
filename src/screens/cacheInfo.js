@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Alert, flex } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Alert, flex, SafeAreaView, ScrollView } from 'react-native';
 import { firebase_auth } from "../firebaseConfig";
 import { firebase_app } from "../firebaseConfig";
 import { db } from "../firebaseConfig";
@@ -45,16 +45,17 @@ export default function CacheInfo({ navigation, route}) {
       }
       
   return (
-    <View style={styles.container}>
-      <Text style={[{fontSize: 30, color: 'white', padding: 30, alignSelf: 'start', fontFamily: 'CountachRegular'}]}>{pagename}</Text>
+    <SafeAreaView style={styles.container}>
+        <ScrollView contentContainerStyle={{alignItems: 'center', minWidth: '100%'}}>
+      <Text style={[{fontSize: 30, color: 'white', paddingLeft: 30, alignSelf: 'start', fontFamily: 'CountachRegular'}]}>{pagename}</Text>
       
       <TouchableOpacity onPress={() => navigation.navigate("Cache")} style={styles.redButton}>
           <Text style={[{color:'white'}]}>Cache List</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button}>
-        <Image></Image>
-        <Text>Cache Info</Text>
+
+        <Image source={require('../../assets/filler.png')} style={{width: 250, height: 332.5,}}/>
       </TouchableOpacity>
 
       <View flexDirection ='row' width ='90%'>
@@ -84,8 +85,8 @@ export default function CacheInfo({ navigation, route}) {
       <Text style={styles.button}>{results}</Text>
 
       
-
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
