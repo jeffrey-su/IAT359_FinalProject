@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
 import { firebase_auth } from "../firebaseConfig";
 import { db } from "../firebaseConfig";
 import { useState } from "react";
@@ -26,7 +26,19 @@ export default function CacheInfo({ navigation, route}) {
         setResults(allcomments.join("\n"));
       }
 
-    
+      async function insertNewComment() {
+        try {
+            const docRef = doc(collection(db, pagename));
+            setDoc(docRef, {
+              commentcontent: inputtedComment,
+            });
+            console.log("Document written with ID: ", docRef.id);
+            setInputtedComment("");
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+
+      }
       
   return (
     <View style={styles.container}>
@@ -48,6 +60,10 @@ export default function CacheInfo({ navigation, route}) {
         onChangeText={newText => setInputtedComment(newText)}
         defaultValue={inputtedComment}
       />
+
+      <TouchableOpacity onPress={insertNewComment} style={styles.redButton}>
+          <Text style={[{color:'white'}]}>Post</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity onPress={getComments} style={styles.redButton}>
           <Text style={[{color:'white'}]}>Show Comments</Text>
