@@ -1,12 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Alert, flex } from 'react-native';
 import { firebase_auth } from "../firebaseConfig";
 import { firebase_app } from "../firebaseConfig";
 import { db } from "../firebaseConfig";
 import { useState } from "react";
 import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/firestore";
 import "firebase/app";
-
 import "firebase/auth";
 
 export default function CacheInfo({ navigation, route}) {
@@ -58,17 +57,25 @@ export default function CacheInfo({ navigation, route}) {
         <Text>Cache Info</Text>
       </TouchableOpacity>
 
+      <View flexDirection ='row' width ='90%'>
+
+      <View style={styles.post}>
+      <TouchableOpacity onPress={insertNewComment} flex='1'>
+          <Text style={[{color:'white'}]}>Post</Text>
+      </TouchableOpacity>
+      </View>
+
+      <View style={styles.box}>
       <TextInput
-        style={styles.button}
+        //style={styles.button}
+        
         placeholder='add a comment'
         placeholderTextColor="#aaa"
         onChangeText={newText => setInputtedComment(newText)}
         defaultValue={inputtedComment}
       />
-
-      <TouchableOpacity onPress={insertNewComment} style={styles.redButton}>
-          <Text style={[{color:'white'}]}>Post</Text>
-      </TouchableOpacity>
+      </View>
+      </View>
 
       <TouchableOpacity onPress={getComments} style={styles.redButton}>
           <Text style={[{color:'white'}]}>Show Comments</Text>
@@ -122,5 +129,38 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     elevation: 3,
     
+  },
+
+  box: {
+    flex: 5,
+    //height:50,
+    width:50,
+    backgroundColor: "#f2f2f2",
+    color: "#fff",
+    alignContent: "center",
+    padding: 8,
+    margin:4,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    elevation: 3,
+  },
+
+  post: {
+    flex: 1,
+    //height:50,
+    width:50,
+    backgroundColor: "#A6192E",
+    color: "#fff",
+    alignContent: "center",
+    padding: 8,
+    margin:4,
+    borderRadius: 8,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    elevation: 3,
   },
 });
