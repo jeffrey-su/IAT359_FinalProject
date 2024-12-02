@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput } from 'react-native';
 import { firebase_auth } from "../firebaseConfig";
 import { db } from "../firebaseConfig";
 import { useState } from "react";
@@ -9,6 +9,7 @@ export default function CacheInfo({ navigation, route}) {
 
     const [results, setResults] = useState("");
     const {pagename} = route.params;
+    const [inputtedComment, setInputtedComment] = useState('');
 
     // function to retrieve all comments from the database
     async function getComments() {
@@ -17,9 +18,9 @@ export default function CacheInfo({ navigation, route}) {
         querySnapshot.forEach((doc) => {
           console.log(doc.id, "=>", doc.data());
           allcomments.push(
-            `${JSON.stringify(doc.data().username)} : ${JSON.stringify(
+            `${doc.data().username}: ${
               doc.data().commentcontent
-            )} `
+            } `
           );
         });
         setResults(allcomments.join("\n"));
@@ -39,6 +40,14 @@ export default function CacheInfo({ navigation, route}) {
         <Image></Image>
         <Text>Cache Info</Text>
       </TouchableOpacity>
+
+      <TextInput
+        style={styles.button}
+        placeholder='add a comment'
+        placeholderTextColor="#aaa"
+        onChangeText={newText => setInputtedComment(newText)}
+        defaultValue={inputtedComment}
+      />
 
       <TouchableOpacity onPress={getComments} style={styles.redButton}>
           <Text style={[{color:'white'}]}>Show Comments</Text>

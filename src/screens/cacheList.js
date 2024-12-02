@@ -26,7 +26,7 @@ export default function CacheList({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Cache Info", {pagename: "ROOM 2740",})}
+        onPress={() => navigation.navigate("Cache Info", {pagename: "ROOM 3100",})}
       >
         <Image source={require('../../assets/filler.png')} style={{width: 250, height: 332.5,}}/>
         <Text style={styles.cacheDesc}>Mac Lab 1 Cache - Room SRYC 3100</Text>
