@@ -5,8 +5,8 @@ import { firebase_app } from "../firebaseConfig";
 import { db } from "../firebaseConfig";
 import { useState } from "react";
 import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/firestore";
-import "firebase/app";
-import "firebase/auth";
+//import "firebase/app";
+//import "firebase/auth";
 
 export default function CacheInfo({ navigation, route}) {
 
