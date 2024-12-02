@@ -55,6 +55,7 @@ export default function LoginScreen({ navigation }) {
         placeholderTextColor="#aaa"
         onChangeText={newText => setInputtedEmail(newText)}
         defaultValue={inputtedEmail}
+        inputMode = "email"
       />
       <TextInput
         style={styles.input}
