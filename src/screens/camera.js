@@ -89,5 +89,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     padding: 10,
     fontSize: 30,
+    fontFamily: 'CountachRegular'
   },
 });

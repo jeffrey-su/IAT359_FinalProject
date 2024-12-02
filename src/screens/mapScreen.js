@@ -175,10 +175,10 @@ export default function MapScreen({ navigation }) {
         showsPointsOfInterest={false}
         showsIndoors={true}
         initialRegion={{
-          latitude: 49.1874929575383,
-          longitude: -122.84976272346668,
-          latitudeDelta: 0.003,
-          longitudeDelta: 0.003,
+          latitude: 49.1868929575383,
+          longitude: -122.84986272346668,
+          latitudeDelta: 0.002,
+          longitudeDelta: 0.002,
         }}
         showsMyLocationButton
         showsUserLocation
