@@ -3,8 +3,13 @@ import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, Butto
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 
+
 export default function CollectionList({ route, navigation }) {
   const [scannedItems, setScannedItems] = useState([]);
+  const [studioABadge, setStudioABadge] = useState(false);
+  const [studioBBadge, setStudioBBadge] = useState(Boolean);
+  const [macLabBadge, setMacLabBadge] = useState(Boolean);
+  
 
   const [pfp, setPfp] = useState('../../assets/filler.png');
 
@@ -38,17 +43,32 @@ export default function CollectionList({ route, navigation }) {
   useEffect(() => {
     if (route.params?.data) {
       const newItem = route.params.data;
-
+  
+      // Check if the new item is 'Studio A' and toggle the studioABadge boolean
+      if (newItem === 'Studio A') {
+        setStudioABadge(true);
+        console.log(studioABadge) // Toggle the boolean value
+      }
+      if (newItem === 'Studio B') {
+        setStudioBBadge(true);
+        console.log(studioABadge) // Toggle the boolean value
+      }
+      if (newItem === 'Mac Lab') {
+        setMacLabBadge(true);
+        console.log(studioABadge) // Toggle the boolean value
+      }
+  
       if (!scannedItems.includes(newItem)) {
         const updatedItems = [...scannedItems, newItem];
         setScannedItems(updatedItems);
-
+  
         // Save updated items to AsyncStorage
         AsyncStorage.setItem('scannedItems', JSON.stringify(updatedItems))
-          .catch(error => console.error("Error saving scanned items:", error));
+          .catch((error) => console.error("Error saving scanned items:", error));
       }
     }
   }, [route.params?.data]);
+  
 
   const resetScans = async () => {
     try {
@@ -58,6 +78,7 @@ export default function CollectionList({ route, navigation }) {
       console.error("Error resetting scanned items:", error);
     }
   };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -77,6 +98,7 @@ export default function CollectionList({ route, navigation }) {
           </TouchableOpacity>
         )}
       />
+      <Text>Studio A Badge: {studioABadge ? 'Unlocked' : 'Locked'}</Text>
 
       <TouchableOpacity
         onPress={() => navigation.navigate('Camera')}
