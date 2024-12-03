@@ -37,6 +37,9 @@ export default function LoginScreen({ navigation }) {
     try {
         await setDoc(doc(db, "PROFILES", inputtedEmail.toLowerCase()), {
           username:inputtedEmail,
+          Studio_A: false,
+          Studio_B: false,
+          MacLab: false,
         });
       } catch (e) {
         console.error("Error adding document: ", e);

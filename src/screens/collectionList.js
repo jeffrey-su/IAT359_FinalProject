@@ -10,8 +10,8 @@ import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/fi
 export default function CollectionList({ route, navigation }) {
   const [scannedItems, setScannedItems] = useState([]);
   const [studioABadge, setStudioABadge] = useState(false);
-  const [studioBBadge, setStudioBBadge] = useState(Boolean);
-  const [macLabBadge, setMacLabBadge] = useState(Boolean);
+  const [studioBBadge, setStudioBBadge] = useState(false);
+  const [macLabBadge, setMacLabBadge] = useState(false);
   
 
   const [username, setUsername] = useState(firebase_auth.currentUser.email);
@@ -72,11 +72,11 @@ export default function CollectionList({ route, navigation }) {
       }
       if (newItem === 'Studio B') {
         setStudioBBadge(true);
-        console.log(studioABadge) // Toggle the boolean value
+        console.log(studioBBadge) // Toggle the boolean value
       }
       if (newItem === 'Mac Lab') {
         setMacLabBadge(true);
-        console.log(studioABadge) // Toggle the boolean value
+        console.log(macLabBadge) // Toggle the boolean value
       }
   
       if (!scannedItems.includes(newItem)) {
@@ -120,6 +120,8 @@ export default function CollectionList({ route, navigation }) {
         )}
       />
       <Text>Studio A Badge: {studioABadge ? 'Unlocked' : 'Locked'}</Text>
+      <Text>Studio B Badge: {studioBBadge ? 'Unlocked' : 'Locked'}</Text>
+      <Text>Mac Lab Badge: {macLabBadge ? 'Unlocked' : 'Locked'}</Text>
 
       <TouchableOpacity
         onPress={() => navigation.navigate('Camera')}
