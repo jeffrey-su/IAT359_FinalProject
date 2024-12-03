@@ -21,7 +21,7 @@ export default function HomeScreen({ navigation }) {
         <Text style={{fontFamily: 'CountachRegular', color: '#cc0633', fontSize: '24'}}>Tap to Begin</Text>
       </TouchableOpacity>
 
-      {/* <Button onPress={() => firebase_auth.signOut()} title="Sign Out" /> */}
+      
     </View>
   );
 }

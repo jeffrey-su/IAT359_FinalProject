@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import { firebase_auth } from "../firebaseConfig";
 import { db } from "../firebaseConfig";
-import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/firestore";
+import { and, collection, doc, getDocs, getDoc, query, setDoc, where,} from "firebase/firestore";
 
 
 export default function CollectionList({ route, navigation }) {
@@ -46,59 +46,79 @@ export default function CollectionList({ route, navigation }) {
     
   }
 
-  useEffect(() => {
-    const loadScannedItems = async () => {
-      try {
-        const storedItems = await AsyncStorage.getItem('scannedItems');
-        if (storedItems) {
-          setScannedItems(JSON.parse(storedItems)); // Parse and set the data
-        }
-      } catch (error) {
-        console.error("Error loading scanned items:", error);
+  async function fetchBadgeData() {
+    try {
+      // Create a reference to the user's document
+      const userDocRef = doc(db, "PROFILES", firebase_auth.currentUser.email);
+  
+      // Retrieve the document using getDoc
+      const userDoc = await getDoc(userDocRef);
+  
+      if (userDoc.exists()) {
+        const data = userDoc.data(); // Extract document data
+        console.log("Fetched data:", data);
+  
+        // Update badge states with Firestore data
+        setMacLabBadge(data.MacLab || false);
+        setStudioABadge(data.Studio_A || false);
+        setStudioBBadge(data.Studio_B || false);
+      } else {
+        console.log("Doc doesnt exist");
       }
-    };
+    } catch (error) {
+      console.error("Error fetching badge data:", error);
+    }
+  };
 
-    loadScannedItems();
-  }, []);
+  async function updateBadgeData(field, value) {
+    try {
+      const userDocRef = doc(db, "PROFILES", firebase_auth.currentUser.email);
+      await setDoc(userDocRef, { [field]: value }, { merge: true });
+  
+      console.log(`${field} updated to:`, value);
+    } catch (error) {
+      console.error(`Error updating ${field}:`, error);
+    }
+  }
 
+  
+  useEffect(() => {
+    fetchBadgeData(); // Fetch badge data from Firestore on component load
+    console.log(firebase_auth.currentUser.email)
+  }, [route.params?.data]);
+  
   useEffect(() => {
     if (route.params?.data) {
       const newItem = route.params.data;
   
       // Check if the new item is 'Studio A' and toggle the studioABadge boolean
       if (newItem === 'Studio A') {
-        setStudioABadge(true);
-        console.log(studioABadge) // Toggle the boolean value
+        // setStudioABadge(true);
+        updateBadgeData("Studio_A", true); // Save to Firestore
       }
+      
       if (newItem === 'Studio B') {
-        setStudioBBadge(true);
-        console.log(studioBBadge) // Toggle the boolean value
+        // setStudioBBadge(true);
+        updateBadgeData("Studio_B", true); // Save to Firestore
       }
+      
       if (newItem === 'Mac Lab') {
-        setMacLabBadge(true);
-        console.log(macLabBadge) // Toggle the boolean value
+        // setMacLabBadge(true);
+        updateBadgeData("MacLab", true); // Save to Firestore
       }
+      
   
-      if (!scannedItems.includes(newItem)) {
-        const updatedItems = [...scannedItems, newItem];
-        setScannedItems(updatedItems);
+      // if (!scannedItems.includes(newItem)) {
+      //   const updatedItems = [...scannedItems, newItem];
+      //   setScannedItems(updatedItems);
   
-        // Save updated items to AsyncStorage
-        AsyncStorage.setItem('scannedItems', JSON.stringify(updatedItems))
-          .catch((error) => console.error("Error saving scanned items:", error));
-      }
+      //   // Save updated items to AsyncStorage
+      //   AsyncStorage.setItem('scannedItems', JSON.stringify(updatedItems))
+      //     .catch((error) => console.error("Error saving scanned items:", error));
+      // }
+      fetchBadgeData
     }
   }, [route.params?.data]);
-  
-
-  const resetScans = async () => {
-    try {
-      await AsyncStorage.removeItem('scannedItems'); // Clear storage
-      setScannedItems([]); // Clear local state
-    } catch (error) {
-      console.error("Error resetting scanned items:", error);
-    }
-  };
 
 
   return (
@@ -120,6 +140,7 @@ export default function CollectionList({ route, navigation }) {
         )}
       />
       <Text>Studio A Badge: {studioABadge ? 'Unlocked' : 'Locked'}</Text>
+      <Image source={studioABadge ? require('../../assets/studioABadge.png') : require('../../assets/3100.jpg')} style={{width: 100, height: 100,}}/>
       <Text>Studio B Badge: {studioBBadge ? 'Unlocked' : 'Locked'}</Text>
       <Text>Mac Lab Badge: {macLabBadge ? 'Unlocked' : 'Locked'}</Text>
 
@@ -129,10 +150,11 @@ export default function CollectionList({ route, navigation }) {
       >
         <Text style={styles.buttonText}>Back to Scanner</Text>
       </TouchableOpacity>
-
-      {/* New Clear Data Button */}
-      <TouchableOpacity onPress={resetScans} style={[styles.resetButton, { backgroundColor: 'red' }]}>
-        <Text style={styles.buttonText}>Clear All Data</Text>
+      <TouchableOpacity
+        onPress={() => firebase_auth.signOut()}
+        style={[styles.resetButton, { backgroundColor: 'red' }]}
+      >
+        <Text style={styles.buttonText}>Sign Out</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
