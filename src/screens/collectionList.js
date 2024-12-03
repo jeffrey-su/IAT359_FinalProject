@@ -95,14 +95,10 @@ export default function CollectionList({ route, navigation }) {
       if (newItem === 'Studio A') {
         // setStudioABadge(true);
         updateBadgeData("Studio_A", true); // Save to Firestore
-      }
-      
-      if (newItem === 'Studio B') {
+      }else if (newItem === 'Studio B') {
         // setStudioBBadge(true);
         updateBadgeData("Studio_B", true); // Save to Firestore
-      }
-      
-      if (newItem === 'Mac Lab') {
+      }else if (newItem === 'Mac Lab') {
         // setMacLabBadge(true);
         updateBadgeData("MacLab", true); // Save to Firestore
       }
@@ -130,6 +126,23 @@ export default function CollectionList({ route, navigation }) {
       <Button title="Edit Profile Picture" onPress={pickImage} />
       <Text>{username}</Text>
 
+      <SafeAreaView style={{flexDirection: 'row', marginTop: '10%'}}>
+        {/* <Text>Studio A Badge: {studioABadge ? 'Unlocked' : 'Locked'}</Text> */}
+        <Image source={studioABadge ? require('../../assets/studioABadge.png') : require('../../assets/studioABadgeLocked.png')} style={{width: 100, height: 90,}}/>
+        {/* <Text>Studio B Badge: {studioBBadge ? 'Unlocked' : 'Locked'}</Text> */}
+        <Image source={studioBBadge ? require('../../assets/studioBBadge.png') : require('../../assets/studioBBadgeLocked.png')} style={{width: 110, height: 100,}}/>
+        {/* <Text>Mac Lab Badge: {macLabBadge ? 'Unlocked' : 'Locked'}</Text> */}
+        <Image source={macLabBadge ? require('../../assets/macLabBadge.png') : require('../../assets/macLabBadgeLocked.png')} style={{width: 100, height: 100,}}/>
+      </SafeAreaView>
+      <SafeAreaView style={{flexDirection: 'row', marginTop: '10%'}}>
+        <Text style={styles.badgeText}>Studio A Badge</Text>
+        {/* <Image source={studioABadge ? require('../../assets/studioABadge.png') : require('../../assets/studioABadgeLocked.png')} style={{width: 100, height: 90,}}/> */}
+        <Text style={styles.badgeText}>Studio B Badge</Text>
+        {/* <Image source={studioABadge ? require('../../assets/studioBBadge.png') : require('../../assets/studioBBadgeLocked.png')} style={{width: 110, height: 100,}}/> */}
+        <Text style={styles.badgeText}>Mac Lab Badge</Text>
+        {/* <Image source={studioABadge ? require('../../assets/macLabBadge.png') : require('../../assets/macLabBadgeLocked.png')} style={{width: 100, height: 100,}}/> */}
+      </SafeAreaView>
+
       <FlatList
         data={scannedItems}
         keyExtractor={(item, index) => index.toString()}
@@ -139,11 +152,7 @@ export default function CollectionList({ route, navigation }) {
           </TouchableOpacity>
         )}
       />
-      <Text>Studio A Badge: {studioABadge ? 'Unlocked' : 'Locked'}</Text>
-      <Image source={studioABadge ? require('../../assets/studioABadge.png') : require('../../assets/3100.jpg')} style={{width: 100, height: 100,}}/>
-      <Text>Studio B Badge: {studioBBadge ? 'Unlocked' : 'Locked'}</Text>
-      <Text>Mac Lab Badge: {macLabBadge ? 'Unlocked' : 'Locked'}</Text>
-
+      
       <TouchableOpacity
         onPress={() => navigation.navigate('Camera')}
         style={[styles.resetButton, { backgroundColor: 'green' }]}
@@ -199,4 +208,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     borderRadius: 5,
   },
+  badgeText:{
+    paddingHorizontal: 15,
+    fontFamily: 'DinRegular',
+  }
 });
