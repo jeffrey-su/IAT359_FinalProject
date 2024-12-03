@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, Button, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
+import { firebase_auth } from "../firebaseConfig";
+import { db } from "../firebaseConfig";
+import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/firestore";
 
 export default function CollectionList({ route, navigation }) {
   const [scannedItems, setScannedItems] = useState([]);
-
+  const [username, setUsername] = useState(firebase_auth.currentUser.email);
   const [pfp, setPfp] = useState('../../assets/filler.png');
 
   const pickImage = async () => {
@@ -18,7 +21,24 @@ export default function CollectionList({ route, navigation }) {
       setPfp(result.assets[0].uri);
     }
     console.log(pfp);
+    getUsername();
   };
+
+  async function getUsername() {
+    const querySnapshot = await getDocs(collection(db, "PROFILES"));
+    let allcomments = []; // for display in text box
+    querySnapshot.forEach((doc) => {
+      if (doc.id == firebase_auth.currentUser.email){
+        console.log(doc.id, "=>", doc.data());
+        allcomments.push(
+        `${doc.data().username}`
+      );
+      }
+      
+    });
+    setUsername(allcomments.join("\n"));
+    
+  }
 
   useEffect(() => {
     const loadScannedItems = async () => {
@@ -65,8 +85,8 @@ export default function CollectionList({ route, navigation }) {
       <View backgroundColor='grey' borderRadius= {100}>
       {pfp && <Image source={{ uri: pfp }} style={{ width: 200, height: 200, borderRadius: 100, }} />}
       </View>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      
+      <Button title="Edit Profile Picture" onPress={pickImage} />
+      <Text>{username}</Text>
 
       <FlatList
         data={scannedItems}
