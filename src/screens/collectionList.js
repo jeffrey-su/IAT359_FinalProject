@@ -6,7 +6,6 @@ import { firebase_auth } from "../firebaseConfig";
 import { db } from "../firebaseConfig";
 import { and, collection, doc, getDocs, query, setDoc, getDoc, where,} from "firebase/firestore";
 
-
 export default function CollectionList({ route, navigation }) {
   const [studioABadge, setStudioABadge] = useState(false);
   const [studioBBadge, setStudioBBadge] = useState(false);
@@ -40,13 +39,11 @@ export default function CollectionList({ route, navigation }) {
       }
     });
     setUsername(allcomments.join("\n"));
-    
   };
 
   async function changeUsername() {
     const cityRef = doc(db, 'PROFILES', firebase_auth.currentUser.email);
     setDoc(cityRef, { username: username }, { merge: true });
-    
   };
 
   async function fetchBadgeData() {
@@ -89,13 +86,10 @@ export default function CollectionList({ route, navigation }) {
       const newItem = route.params.data;
 
       if (newItem === 'Studio A') {
-        // setStudioABadge(true);
-        updateBadgeData("Studio_A", true); // Save to Firestore
+        updateBadgeData("Studio_A", true);
       }else if (newItem === 'Studio B') {
-        // setStudioBBadge(true);
-        updateBadgeData("Studio_B", true); // Save to Firestore
+        updateBadgeData("Studio_B", true); 
       }else if (newItem === 'Mac Lab') {
-        // setMacLabBadge(true);
         updateBadgeData("MacLab", true); 
     }
     }
@@ -124,18 +118,17 @@ export default function CollectionList({ route, navigation }) {
         <Image source={macLabBadge ? require('../../assets/macLabBadge.png') : require('../../assets/macLabBadgeLocked.png')} style={{width: 100, height: 100,}}/>
       </SafeAreaView>
 
-      <SafeAreaView style={{flexDirection: 'row', marginTop: '10%'}}>
-        <Text style={styles.badgeText}>Studio A Badge</Text>
-        <Text style={styles.badgeText}>Studio B Badge</Text>
-        <Text style={styles.badgeText}>Mac Lab Badge</Text>
+      <SafeAreaView style={{flexDirection: 'row', marginTop: '10'}}>
+        <Text style={[styles.badgeText, styles.badgeTextBackground]}>Studio A Badge</Text>
+        <Text style={[styles.badgeText, styles.badgeTextBackground]}>Studio B Badge</Text>
+        <Text style={[styles.badgeText, styles.badgeTextBackground]}>Mac Lab Badge</Text>
       </SafeAreaView>
-      <SafeAreaView style={{alignItems: 'flex-end'}}>
-        <TouchableOpacity
-          onPress={() => firebase_auth.signOut()}
-          style={[styles.button, {}]}>
-          <Text style={{fontFamily: 'CountachRegular', color: '#fff', fontSize: '24'}}>Sign Out</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
+    
+      <TouchableOpacity
+        onPress={() => firebase_auth.signOut()}
+        style={[styles.button, {position: 'absolute', bottom: '0'}]}>
+        <Text style={{fontFamily: 'CountachRegular', color: '#fff', fontSize: '24'}}>Sign Out</Text>
+      </TouchableOpacity>
       
     </SafeAreaView>
   );
@@ -144,14 +137,14 @@ export default function CollectionList({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
+    flexDirection: 'column'
   },
   button: {
-    maxWidth: '100%',
-    minWidth: '95%',
-    padding: 30,
+    maxWidth: '80%',
+    minWidth: '70%',
+    padding: 12,
     marginVertical: 10,
     backgroundColor: '#cc0633',
     borderRadius: 8,
@@ -161,23 +154,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     elevation: 3,
   },
-  scanMoreText: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#90d1a9',
-    height: 50,
-    padding: 5,
-    margin: 10,
-    borderRadius: 8,
-  },
-  resetButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: 'red',
-    borderRadius: 5,
-  },
   badgeText:{
     paddingHorizontal: 15,
     fontFamily: 'DinRegular',
+    color: '#fff'
   },
+  badgeTextBackground:{
+    backgroundColor: '#cc0633', 
+    paddingVertical: 3,
+    paddingHorizontal: 3,
+    marginHorizontal: 5, 
+    borderRadius: 6
+  }
 });

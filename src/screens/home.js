@@ -7,10 +7,10 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.container}>
         <View style={{flexDirection: 'row'}}>
           <Image source={require('../../assets/logo.png') } style={styles.logo}/>
-          <Text style={[{fontSize: 35, padding: 30, color: '#fff', fontFamily: 'CountachRegular',}]}>SFU {'\n'}GEOCACHING </Text>
+          <Text style={[{fontSize: 43, padding: 30, color: '#fff', fontFamily: 'CountachRegular',}]}>SFU {'\n'}GEOCACHING </Text>
         </View>
         
-        <Text style={{fontFamily: 'DinRegular', color: '#fff', maxWidth: '60%', fontSize: 17}}>Geocaching is a real-world puzzle solving game where players 
+        <Text style={{fontFamily: 'DinRegular', color: '#fff', maxWidth: '66%', fontSize: 17}}>Geocaching is a real-world puzzle solving game where players 
           explore urban or natural areas in search of small 'caches' or artifacts with the help of an app or compass. {'\n\n'}
           SFU Geocaching focuses on the Surrey Campus of Simon Fraser University, as you explore the campus using the map, path your way around using 
           the markers as a guide to find a cache and add it to your collection.</Text>
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
   },
   button: { 
     marginTop: 30,
-    maxWidth: '60%',
-    minWidth: '60%',
+    maxWidth: '65%',
+    minWidth: '65%',
     padding: 20,
     marginVertical: 10,
     backgroundColor: '#f2f2f2',
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     marginTop: 30, 
     marginLeft: 30, 
     marginRight: -20, 
-    width: 60, 
-    height: 60,
+    width: 73, 
+    height: 73,
   }
 });
