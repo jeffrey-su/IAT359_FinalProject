@@ -11,7 +11,7 @@ import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/fi
 export default function CacheInfo({ navigation, route}) {
 
     const [results, setResults] = useState("");
-    
+    const [resultsArray, setResultsArray] = useState("");
     const {pagename} = route.params;
     const [inputtedComment, setInputtedComment] = useState('');
 
@@ -27,7 +27,7 @@ export default function CacheInfo({ navigation, route}) {
             } `
           );
         });
-        setResults(allcomments.join("\n"));
+        setResults(allcomments.join(","));
       }
 
       async function insertNewComment() {
@@ -90,6 +90,8 @@ export default function CacheInfo({ navigation, route}) {
       </TouchableOpacity>
 
       <Text style={styles.button}>{results}</Text>
+
+
       </ScrollView>
       
       

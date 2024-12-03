@@ -116,7 +116,7 @@ export default function CollectionList({ route, navigation }) {
         onChangeText={newText => setUsername(newText)}
         defaultValue={username}
       />
-      <Button title="Edit Name" onPress={changeUsername}/>
+      <Button title="Save Changes" onPress={changeUsername}/>
 
       <SafeAreaView style={{flexDirection: 'row', marginTop: '10%'}}>
         <Image source={studioABadge ? require('../../assets/studioABadge.png') : require('../../assets/studioABadgeLocked.png')} style={{width: 100, height: 90,}}/>
