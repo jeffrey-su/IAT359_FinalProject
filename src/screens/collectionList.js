@@ -105,6 +105,10 @@ export default function CollectionList({ route, navigation }) {
     initializeDarkMode();
   }, []);
 
+  useEffect(() => {
+    fetchBadgeData();
+  }, [route.params?.data]);
+  
   const toggleDarkMode = () => {
     const newDarkModeState = !isDarkMode;
     setIsDarkMode(newDarkModeState);
