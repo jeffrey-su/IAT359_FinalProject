@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Alert, flex, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Alert, flex, SafeAreaView, ScrollView, FlatList } from 'react-native';
 import { firebase_auth } from "../firebaseConfig";
 import { firebase_app } from "../firebaseConfig";
 import { db } from "../firebaseConfig";
@@ -11,6 +11,7 @@ import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/fi
 export default function CacheInfo({ navigation, route}) {
 
     const [results, setResults] = useState("");
+    const [resultsArray, setResultsArray] = useState({"ha":"ha"});
     const {pagename} = route.params;
     const [inputtedComment, setInputtedComment] = useState('');
 
@@ -46,12 +47,18 @@ export default function CacheInfo({ navigation, route}) {
       
   return (
     <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={{alignItems: 'center', minWidth: '100%'}}>
+      <ScrollView contentContainerStyle={{alignItems: 'center', minWidth: '100%'}}>
       <Text style={[{fontSize: 30, color: 'white', paddingLeft: 30, alignSelf: 'start', fontFamily: 'CountachRegular'}]}>{pagename}</Text>
+
+      <View flexDirection ='row' width ='90%'>
+
       
-      <TouchableOpacity onPress={() => navigation.navigate("Cache")} style={styles.redButton}>
-          <Text style={[{color:'white'}]}>Cache List</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Cache")} style={styles.post}>
+          <Text style={[{color:'white'}]}>Back</Text>
       </TouchableOpacity>
+      <View style={styles.empty}></View>
+      
+      </View>
 
       <TouchableOpacity style={styles.button}>
 
@@ -65,7 +72,7 @@ export default function CacheInfo({ navigation, route}) {
           <Text style={[{color:'white'}]}>Post</Text>
       </TouchableOpacity>
       </View>
-
+    
       <View style={styles.box}>
       <TextInput
         //style={styles.button}
@@ -83,9 +90,9 @@ export default function CacheInfo({ navigation, route}) {
       </TouchableOpacity>
 
       <Text style={styles.button}>{results}</Text>
-
-      
       </ScrollView>
+      
+      
     </SafeAreaView>
   );
 }
@@ -159,6 +166,21 @@ const styles = StyleSheet.create({
     margin:4,
     borderRadius: 8,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    elevation: 3,
+  },
+
+  empty: {
+    flex: 5,
+    //height:50,
+    width:50,
+    
+    alignContent: "center",
+    padding: 8,
+    margin:4,
+    borderRadius: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,

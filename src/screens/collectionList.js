@@ -1,9 +1,24 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, Button, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function CollectionList({ route, navigation }) {
   const [scannedItems, setScannedItems] = useState([]);
+
+  const [pfp, setPfp] = useState('../../assets/filler.png');
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) {
+      setPfp(result.assets[0].uri);
+    }
+    console.log(pfp);
+  };
 
   useEffect(() => {
     const loadScannedItems = async () => {
@@ -46,6 +61,13 @@ export default function CollectionList({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+
+      <View backgroundColor='grey' borderRadius= {100}>
+      {pfp && <Image source={{ uri: pfp }} style={{ width: 200, height: 200, borderRadius: 100, }} />}
+      </View>
+      <Button title="Pick an image from camera roll" onPress={pickImage} />
+      
+
       <FlatList
         data={scannedItems}
         keyExtractor={(item, index) => index.toString()}
