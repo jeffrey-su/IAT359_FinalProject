@@ -124,7 +124,7 @@ export default function CollectionList({ route, navigation }) {
         onChangeText={newText => setUsername(newText)}
         defaultValue={username}
       />
-      <Button title="Edit Name" onPress={changeUsername}/>
+      <Button title="Save Changes" onPress={changeUsername}/>
 
       <SafeAreaView style={{flexDirection: 'row', marginTop: '10%'}}>
         {/* <Text>Studio A Badge: {studioABadge ? 'Unlocked' : 'Locked'}</Text> */}
