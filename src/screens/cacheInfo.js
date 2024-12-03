@@ -32,7 +32,7 @@ export default function CacheInfo({ navigation, route}) {
 
       async function insertNewComment() {
         try {
-            const docRef = doc(collection(db, pagename));
+            const docRef= doc(collection(db, pagename));
             setDoc(docRef, {
               commentcontent: inputtedComment,
               username: firebase_auth.currentUser.email,
