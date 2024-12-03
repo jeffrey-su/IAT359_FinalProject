@@ -11,7 +11,7 @@ import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/fi
 export default function CacheInfo({ navigation, route}) {
 
     const [results, setResults] = useState("");
-    const [resultsArray, setResultsArray] = useState({"ha":"ha"});
+    const [username, setUsername] = useState("");
     const {pagename} = route.params;
     const [inputtedComment, setInputtedComment] = useState('');
 
@@ -30,12 +30,29 @@ export default function CacheInfo({ navigation, route}) {
         setResults(allcomments.join("\n"));
       }
 
+      async function getUsername() {
+        const querySnapshot = await getDocs(collection(db, "PROFILES"));
+        let allcomments = []; // for display in text box
+        querySnapshot.forEach((doc) => {
+          if (doc.id == firebase_auth.currentUser.email){
+            console.log(doc.id, "=>", doc.data());
+            allcomments.push(
+            `${doc.data().username}`
+          );
+          }
+          
+        });
+        setUsername(allcomments.join("\n"));
+        
+      }
+
       async function insertNewComment() {
         try {
+            getUsername
             const docRef= doc(collection(db, pagename));
             setDoc(docRef, {
               commentcontent: inputtedComment,
-              username: firebase_auth.currentUser.email,
+              username: username,
             });
             console.log("Document written with ID: ", docRef.id);
             setInputtedComment("");
