@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Alert, flex
 import { firebase_auth } from "../firebaseConfig";
 import { firebase_app } from "../firebaseConfig";
 import { db } from "../firebaseConfig";
-import { useState } from "react";
+import React,{ useState, useEffect } from "react";
 import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/firestore";
 //import "firebase/app";
 //import "firebase/auth";
@@ -11,9 +11,74 @@ import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/fi
 export default function CacheInfo({ navigation, route}) {
 
     const [results, setResults] = useState("");
-    const [resultsArray, setResultsArray] = useState("");
+    
     const {pagename} = route.params;
     const [inputtedComment, setInputtedComment] = useState('');
+    const [theID, setTheID] = useState('26gscNQHswYio5RBu');
+
+    const key = 'gBeh60LnsWOf8p9UdXpVLilnmHDsiBjR';
+    const R3100 = 'l41JNsXAvFvoHvWJW'
+    const STDA = '26gscNQHswYio5RBu'
+    const STDB = 'Uul6g9WTEI40evQ2b5'
+
+     function pickTheRoom() {
+
+        if(pagename == 'STUDIO A'){
+    
+            apiCall();
+        }
+
+        if(pagename == 'STUDIO B'){
+            BapiCall();
+        }
+         
+        if(pagename == 'ROOM 3100'){
+            TapiCall();
+        }
+        
+
+    }
+    
+
+    
+    
+
+    const [gif, setGif] = useState({});
+
+    const apiCall = async () => {
+
+        const res = await fetch('https://api.giphy.com/v1/gifs/'+ STDA +'?api_key=yGovaWQWUfAiOfeas688nX4LJKRglUHC&rating=g');
+    
+        const json = await res.json();
+    
+        setGif({image_url: json.data.images.original.url});
+    
+      }
+
+    const BapiCall = async () => {
+
+        const res = await fetch('https://api.giphy.com/v1/gifs/'+ STDB +'?api_key=yGovaWQWUfAiOfeas688nX4LJKRglUHC&rating=g');
+    
+        const json = await res.json();
+    
+        setGif({image_url: json.data.images.original.url});
+    
+      }
+
+      const TapiCall = async () => {
+
+        const res = await fetch('https://api.giphy.com/v1/gifs/'+ R3100 +'?api_key=yGovaWQWUfAiOfeas688nX4LJKRglUHC&rating=g');
+    
+        const json = await res.json();
+    
+        setGif({image_url: json.data.images.original.url});
+    
+      }
+    
+      useEffect(() => {
+        pickTheRoom();
+        //apiCall();
+      }, []);
 
     // function to retrieve all comments from the database
     async function getComments() {
@@ -22,12 +87,12 @@ export default function CacheInfo({ navigation, route}) {
         querySnapshot.forEach((doc) => {
           console.log(doc.id, "=>", doc.data());
           allcomments.push(
-            `${doc.data().username}: ${
+            `${doc.data().username}:\n${
               doc.data().commentcontent
             } `
           );
         });
-        setResults(allcomments.join(","));
+        setResults(allcomments.join("\n\n"));
       }
 
       async function insertNewComment() {
@@ -62,7 +127,7 @@ export default function CacheInfo({ navigation, route}) {
 
       <TouchableOpacity style={styles.button}>
 
-        <Image source={require('../../assets/filler.png')} style={{width: 250, height: 332.5,}}/>
+        <Image source={{uri: gif.image_url}} style={{width: 250, height: 332.5,}}/>
       </TouchableOpacity>
 
       <View flexDirection ='row' width ='90%'>
@@ -90,8 +155,6 @@ export default function CacheInfo({ navigation, route}) {
       </TouchableOpacity>
 
       <Text style={styles.button}>{results}</Text>
-
-
       </ScrollView>
       
       
