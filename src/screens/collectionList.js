@@ -103,26 +103,42 @@ export default function CollectionList({ route, navigation }) {
       <View backgroundColor='grey' borderRadius= {100}>
       {pfp && <Image source={{ uri: pfp }} style={{ width: 200, height: 200, borderRadius: 100, }} />}
       </View>
-      <Button title="Edit Profile Picture" onPress={pickImage} />
-      <TextInput
-        placeholder='add a comment'
-        placeholderTextColor="#aaa"
-        onChangeText={newText => setUsername(newText)}
-        defaultValue={username}
-      />
-      <Button title="Save Changes" onPress={changeUsername}/>
+      <TouchableOpacity
+        onPress={pickImage}
+        style={[styles.profileEditBackground, {marginVertical: 10}]}>
+        <Text style={styles.badgeText}>Edit Profile Picture</Text>
+      </TouchableOpacity>
 
-      <SafeAreaView style={{flexDirection: 'row', marginTop: '10%'}}>
-        <Image source={studioABadge ? require('../../assets/studioABadge.png') : require('../../assets/studioABadgeLocked.png')} style={{width: 100, height: 90,}}/>
-        <Image source={studioBBadge ? require('../../assets/studioBBadge.png') : require('../../assets/studioBBadgeLocked.png')} style={{width: 110, height: 100,}}/>
-        <Image source={macLabBadge ? require('../../assets/macLabBadge.png') : require('../../assets/macLabBadgeLocked.png')} style={{width: 100, height: 100,}}/>
+      <View style={{flexDirection: 'row', alignContent: 'center'}}>
+        <TextInput
+          placeholder='name'
+          placeholderTextColor="#aaa"
+          onChangeText={newText => setUsername(newText)}
+          defaultValue={username}
+          style={styles.nameInput}
+        />
+        <TouchableOpacity
+          onPress={changeUsername}
+          style={[styles.badgeTextBackground, {padding: 30, alignSelf: 'center'}]}>
+          <Text style={styles.badgeText}>Save</Text>
+        </TouchableOpacity>
+      </View>
+      
+      <SafeAreaView style={{alignItems: 'center', backgroundColor: '#cc0633', marginTop: 30, borderRadius: 10}}>
+        <SafeAreaView style={{flexDirection: 'row', marginTop: '10%'}}>
+          <Image source={studioABadge ? require('../../assets/studioABadge.png') : require('../../assets/studioABadgeLocked.png')} style={{width: 100, height: 90,}}/>
+          <Image source={studioBBadge ? require('../../assets/studioBBadge.png') : require('../../assets/studioBBadgeLocked.png')} style={{width: 110, height: 100,}}/>
+          <Image source={macLabBadge ? require('../../assets/macLabBadge.png') : require('../../assets/macLabBadgeLocked.png')} style={{width: 100, height: 100,}}/>
+        </SafeAreaView>
+
+        <SafeAreaView style={{flexDirection: 'row', marginTop: '10'}}>
+          <Text style={[styles.badgeText, {paddingBottom: 30}]}>Studio A Badge</Text>
+          <Text style={[styles.badgeText, {paddingBottom: 30}]}>Studio B Badge</Text>
+          <Text style={[styles.badgeText, {paddingBottom: 30}]}>Mac Lab Badge</Text>
+        </SafeAreaView>
       </SafeAreaView>
 
-      <SafeAreaView style={{flexDirection: 'row', marginTop: '10'}}>
-        <Text style={[styles.badgeText, styles.badgeTextBackground]}>Studio A Badge</Text>
-        <Text style={[styles.badgeText, styles.badgeTextBackground]}>Studio B Badge</Text>
-        <Text style={[styles.badgeText, styles.badgeTextBackground]}>Mac Lab Badge</Text>
-      </SafeAreaView>
+      
     
       <TouchableOpacity
         onPress={() => firebase_auth.signOut()}
@@ -143,7 +159,7 @@ const styles = StyleSheet.create({
   },
   button: {
     maxWidth: '80%',
-    minWidth: '70%',
+    minWidth: '90%',
     padding: 12,
     marginVertical: 10,
     backgroundColor: '#cc0633',
@@ -159,11 +175,29 @@ const styles = StyleSheet.create({
     fontFamily: 'DinRegular',
     color: '#fff'
   },
-  badgeTextBackground:{
+  profileEditBackground:{
     backgroundColor: '#cc0633', 
     paddingVertical: 3,
     paddingHorizontal: 3,
     marginHorizontal: 5, 
     borderRadius: 6
+  },
+  badgeTextBackground:{
+    backgroundColor: '#cc0633', 
+    paddingVertical: 10,
+    paddingHorizontal: 3,
+    borderRadius: 6
+  },
+  nameInput:{
+    fontSize: 20, 
+    justifySelf: 'center', 
+    backgroundColor: '#f2f2f2', 
+    paddingHorizontal: 40, 
+    padding: 5,
+    color: '#000', 
+    borderColor: '#000',
+    borderWidth: 1,
+    borderRadius: 7,
+    marginRight: 10, 
   }
 });
