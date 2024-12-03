@@ -14,17 +14,39 @@ import React, { useEffect, useState } from "react";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+async function getDarkModeState() {
+  try {
+    const value = await AsyncStorage.getItem('darkMode');
+    return value !== null ? JSON.parse(value) : false; 
+  } catch (error) {
+    console.error('Error retrieving dark mode state:', error);
+    return false; 
+  }
+}
 
 export default function App() {
+
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
   const ProStack = createNativeStackNavigator();
   const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const initializeDarkMode = async () => {
+      const savedDarkModeState = await getDarkModeState();
+      setIsDarkMode(savedDarkModeState);
+    };
+
+    initializeDarkMode();
+  }, []);
+
   function TabNavigator() {
     return (
-      <Tab.Navigator initialRouteName="Home" screenOptions={{ headerShown: false , tabBarActiveTintColor: "#A6192E", tabBarStyle: {backgroundColor:"white"}, }}>
+      <Tab.Navigator initialRouteName="Home" screenOptions={{ headerShown: false , tabBarActiveTintColor: "#A6192E", tabBarStyle: {backgroundColor: isDarkMode ? '#393939' : '#fff'}, }}>
         <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarLabel: 'Home', tabBarIcon: ({ color, size }) => ( <Ionicons name="home" color={color} size={size} />),}}/>
         <Tab.Screen name="Map" component={MapScreen} options={{ tabBarLabel: 'Map', tabBarIcon: ({ color, size }) => ( <Ionicons name="map" color={color} size={size} />),}}/>
         <Tab.Screen name="Camera" component={CameraScreen} options={{ tabBarLabel: 'Camera', tabBarIcon: ({ color, size }) => ( <Ionicons name="camera" color={color} size={size} />),}} />

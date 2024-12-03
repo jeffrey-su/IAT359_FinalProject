@@ -1,10 +1,28 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, Button, Image, TextInput } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, Switch, Image, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import { firebase_auth } from "../firebaseConfig";
 import { db } from "../firebaseConfig";
 import { and, collection, doc, getDocs, query, setDoc, getDoc, where,} from "firebase/firestore";
+
+async function saveDarkModeState(value) {
+  try {
+    await AsyncStorage.setItem('darkMode', JSON.stringify(value));
+  } catch (error) {
+    console.error('Error saving dark mode state:', error);
+  }
+}
+
+async function getDarkModeState() {
+  try {
+    const value = await AsyncStorage.getItem('darkMode');
+    return value !== null ? JSON.parse(value) : false; 
+  } catch (error) {
+    console.error('Error retrieving dark mode state:', error);
+    return false; 
+  }
+}
 
 export default function CollectionList({ route, navigation }) {
   const [studioABadge, setStudioABadge] = useState(false);
@@ -13,6 +31,7 @@ export default function CollectionList({ route, navigation }) {
   
   const [username, setUsername] = useState(firebase_auth.currentUser.email);
   const [pfp, setPfp] = useState('../../assets/filler.png');
+  const [isDarkMode, setIsDarkMode] = useState(false); 
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -76,10 +95,22 @@ export default function CollectionList({ route, navigation }) {
       console.error(`Error updating ${field}:`, error);
     }
   }
-
+  
   useEffect(() => {
+    const initializeDarkMode = async () => {
+      const savedDarkModeState = await getDarkModeState();
+      setIsDarkMode(savedDarkModeState);
+    };
     fetchBadgeData();
-  },[route.params?.data]);
+    initializeDarkMode();
+  }, []);
+
+  const toggleDarkMode = () => {
+    const newDarkModeState = !isDarkMode;
+    setIsDarkMode(newDarkModeState);
+    saveDarkModeState(newDarkModeState);
+  };
+
 
   useEffect(() => {
     if (route.params?.data) {
@@ -98,15 +129,16 @@ export default function CollectionList({ route, navigation }) {
 
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: isDarkMode ? "#393939" : "#fff" }]}>
 
-      <View backgroundColor='grey' borderRadius= {100}>
-      {pfp && <Image source={{ uri: pfp }} style={{ width: 200, height: 200, borderRadius: 100, }} />}
-      </View>
       <TouchableOpacity
         onPress={pickImage}
-        style={[styles.profileEditBackground, {marginVertical: 10}]}>
-        <Text style={styles.badgeText}>Edit Profile Picture</Text>
+        style={[{marginVertical: 10}]}
+        >
+      
+        <View backgroundColor='grey' borderRadius= {100}>
+        {pfp && <Image source={{ uri: pfp }} style={{ width: 200, height: 200, borderRadius: 100, }} />}
+        </View>
       </TouchableOpacity>
 
       <View style={{flexDirection: 'row', alignContent: 'center'}}>
@@ -138,8 +170,14 @@ export default function CollectionList({ route, navigation }) {
         </SafeAreaView>
       </SafeAreaView>
 
-      
-    
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
+        <Text style={{ color: isDarkMode ? "#fff" : "#000", marginRight: 10 }}>Dark Mode</Text>
+        <Switch
+          value={isDarkMode}
+          onValueChange={toggleDarkMode}
+        />
+      </View>
+
       <TouchableOpacity
         onPress={() => firebase_auth.signOut()}
         style={[styles.button, {position: 'absolute', bottom: '0'}]}>
@@ -154,7 +192,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    marginBottom: 20,
     flexDirection: 'column'
   },
   button: {
