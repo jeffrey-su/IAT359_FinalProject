@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, TextInput, Image } from 'react-native';
 import React, {useState, useEffect} from 'react';
+import { db } from "../firebaseConfig";
+import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/firestore";
 
 import {
   createUserWithEmailAndPassword,
@@ -28,7 +30,19 @@ export default function LoginScreen({ navigation }) {
       alert(error.message);
       console.log(firebase.apps);
     }
+    createAcountDetails()
   };
+
+  async function createAcountDetails() {
+    try {
+        await setDoc(doc(db, "PROFILES", inputtedEmail), {
+          username:inputtedEmail,
+        });
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+
+  }
 
   const handleSignIn = async () => {
     try {
