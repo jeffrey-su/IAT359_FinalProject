@@ -51,7 +51,6 @@ export default function LoginScreen({ navigation }) {
     try {
       const response = await signInWithEmailAndPassword(auth, inputtedEmail, inputtedPassword);
       console.log(response);
-      // alert("User: " + inputtedEmail + " signed in");
     } catch (error) {
       console.log(error.message);
       alert(error.message);

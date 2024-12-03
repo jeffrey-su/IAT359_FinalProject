@@ -38,7 +38,6 @@ export default function CollectionList({ route, navigation }) {
         `${doc.data().username}`
       );
       }
-      
     });
     setUsername(allcomments.join("\n"));
     
@@ -52,17 +51,13 @@ export default function CollectionList({ route, navigation }) {
 
   async function fetchBadgeData() {
     try {
-      // Create a reference to the user's document
       const userDocRef = doc(db, "PROFILES", firebase_auth.currentUser.email);
-  
-      // Retrieve the document using getDoc
       const userDoc = await getDoc(userDocRef);
   
       if (userDoc.exists()) {
-        const data = userDoc.data(); // Extract document data
+        const data = userDoc.data(); 
         console.log("Fetched data:", data);
   
-        // Update badge states with Firestore data
         setMacLabBadge(data.MacLab || false);
         setStudioABadge(data.Studio_A || false);
         setStudioBBadge(data.Studio_B || false);
@@ -87,8 +82,7 @@ export default function CollectionList({ route, navigation }) {
 
   useEffect(() => {
     fetchBadgeData();
-    console.log(firebase_auth.currentUser.email);
-  }, [route.params?.data]);
+  },[route.params?.data]);
 
   useEffect(() => {
     if (route.params?.data) {
@@ -104,8 +98,8 @@ export default function CollectionList({ route, navigation }) {
         // setMacLabBadge(true);
         updateBadgeData("MacLab", true); 
     }
-      fetchBadgeData
     }
+    fetchBadgeData
   }, [route.params?.data]);
 
 
@@ -117,8 +111,6 @@ export default function CollectionList({ route, navigation }) {
       </View>
       <Button title="Edit Profile Picture" onPress={pickImage} />
       <TextInput
-        //style={styles.button}
-        
         placeholder='add a comment'
         placeholderTextColor="#aaa"
         onChangeText={newText => setUsername(newText)}
@@ -127,39 +119,24 @@ export default function CollectionList({ route, navigation }) {
       <Button title="Edit Name" onPress={changeUsername}/>
 
       <SafeAreaView style={{flexDirection: 'row', marginTop: '10%'}}>
-        {/* <Text>Studio A Badge: {studioABadge ? 'Unlocked' : 'Locked'}</Text> */}
         <Image source={studioABadge ? require('../../assets/studioABadge.png') : require('../../assets/studioABadgeLocked.png')} style={{width: 100, height: 90,}}/>
-        {/* <Text>Studio B Badge: {studioBBadge ? 'Unlocked' : 'Locked'}</Text> */}
         <Image source={studioBBadge ? require('../../assets/studioBBadge.png') : require('../../assets/studioBBadgeLocked.png')} style={{width: 110, height: 100,}}/>
-        {/* <Text>Mac Lab Badge: {macLabBadge ? 'Unlocked' : 'Locked'}</Text> */}
         <Image source={macLabBadge ? require('../../assets/macLabBadge.png') : require('../../assets/macLabBadgeLocked.png')} style={{width: 100, height: 100,}}/>
       </SafeAreaView>
+
       <SafeAreaView style={{flexDirection: 'row', marginTop: '10%'}}>
         <Text style={styles.badgeText}>Studio A Badge</Text>
-        {/* <Image source={studioABadge ? require('../../assets/studioABadge.png') : require('../../assets/studioABadgeLocked.png')} style={{width: 100, height: 90,}}/> */}
         <Text style={styles.badgeText}>Studio B Badge</Text>
-        {/* <Image source={studioABadge ? require('../../assets/studioBBadge.png') : require('../../assets/studioBBadgeLocked.png')} style={{width: 110, height: 100,}}/> */}
         <Text style={styles.badgeText}>Mac Lab Badge</Text>
-        {/* <Image source={studioABadge ? require('../../assets/macLabBadge.png') : require('../../assets/macLabBadgeLocked.png')} style={{width: 100, height: 100,}}/> */}
       </SafeAreaView>
-
-      <FlatList
-      />
-
-      
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Camera')}
-        style={[styles.resetButton, { backgroundColor: 'green' }]}
-      >
-        <Text style={styles.buttonText}>Back to Scanner</Text>
-      </TouchableOpacity>
-
-       <TouchableOpacity
-        onPress={() => firebase_auth.signOut()}
-        style={[styles.resetButton, { backgroundColor: 'red' }]}
-      >
-        <Text style={styles.buttonText}>Sign Out</Text>
+      <SafeAreaView style={{alignItems: 'flex-end'}}>
+        <TouchableOpacity
+          onPress={() => firebase_auth.signOut()}
+          style={[styles.button, {}]}>
+          <Text style={{fontFamily: 'CountachRegular', color: '#fff', fontSize: '24'}}>Sign Out</Text>
         </TouchableOpacity>
+      </SafeAreaView>
+      
     </SafeAreaView>
   );
 }
@@ -176,7 +153,7 @@ const styles = StyleSheet.create({
     minWidth: '95%',
     padding: 30,
     marginVertical: 10,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#cc0633',
     borderRadius: 8,
     alignItems: 'center',
     shadowColor: '#000',
@@ -192,10 +169,6 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 10,
     borderRadius: 8,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
   },
   resetButton: {
     marginTop: 20,
