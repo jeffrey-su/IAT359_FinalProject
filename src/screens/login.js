@@ -35,7 +35,7 @@ export default function LoginScreen({ navigation }) {
 
   async function createAcountDetails() {
     try {
-        await setDoc(doc(db, "PROFILES", inputtedEmail), {
+        await setDoc(doc(db, "PROFILES", inputtedEmail.toLowerCase()), {
           username:inputtedEmail,
         });
       } catch (e) {
