@@ -21,6 +21,10 @@ export default function CacheInfo({ navigation, route}) {
     const STDA = '26gscNQHswYio5RBu'
     const STDB = 'Uul6g9WTEI40evQ2b5'
 
+    const R31002 = 'TMglxVVGmud6Q3HOhb'
+    const STDA2 = 'CHhTU86cOqQNnhujii'
+    const STDB2 = '6rweA31lJIbBNrAw9n'
+
      function pickTheRoom() {
 
         if(pagename == 'STUDIO A'){
@@ -47,7 +51,7 @@ export default function CacheInfo({ navigation, route}) {
 
     const apiCall = async () => {
 
-        const res = await fetch('https://api.giphy.com/v1/gifs/'+ STDA +'?api_key=yGovaWQWUfAiOfeas688nX4LJKRglUHC&rating=g');
+        const res = await fetch('https://api.giphy.com/v1/gifs/'+ STDA2 +'?api_key=yGovaWQWUfAiOfeas688nX4LJKRglUHC&rating=g');
     
         const json = await res.json();
     
@@ -57,7 +61,7 @@ export default function CacheInfo({ navigation, route}) {
 
     const BapiCall = async () => {
 
-        const res = await fetch('https://api.giphy.com/v1/gifs/'+ STDB +'?api_key=yGovaWQWUfAiOfeas688nX4LJKRglUHC&rating=g');
+        const res = await fetch('https://api.giphy.com/v1/gifs/'+ STDB2 +'?api_key=yGovaWQWUfAiOfeas688nX4LJKRglUHC&rating=g');
     
         const json = await res.json();
     
@@ -67,7 +71,7 @@ export default function CacheInfo({ navigation, route}) {
 
       const TapiCall = async () => {
 
-        const res = await fetch('https://api.giphy.com/v1/gifs/'+ R3100 +'?api_key=yGovaWQWUfAiOfeas688nX4LJKRglUHC&rating=g');
+        const res = await fetch('https://api.giphy.com/v1/gifs/'+ R31002 +'?api_key=yGovaWQWUfAiOfeas688nX4LJKRglUHC&rating=g');
     
         const json = await res.json();
     
@@ -107,7 +111,6 @@ export default function CacheInfo({ navigation, route}) {
           } catch (e) {
             console.error("Error adding document: ", e);
           }
-
       }
       
   return (
