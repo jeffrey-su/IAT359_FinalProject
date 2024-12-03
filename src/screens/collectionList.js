@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, Button, Image } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, Button, Image, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import { firebase_auth } from "../firebaseConfig";
 import { db } from "../firebaseConfig";
-import { and, collection, doc, getDocs, getDoc, query, setDoc, where,} from "firebase/firestore";
+import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/firestore";
 
 
 export default function CollectionList({ route, navigation }) {
@@ -46,75 +46,66 @@ export default function CollectionList({ route, navigation }) {
     
   }
 
-  async function fetchBadgeData() {
-    try {
-      // Create a reference to the user's document
-      const userDocRef = doc(db, "PROFILES", firebase_auth.currentUser.email);
-  
-      // Retrieve the document using getDoc
-      const userDoc = await getDoc(userDocRef);
-  
-      if (userDoc.exists()) {
-        const data = userDoc.data(); // Extract document data
-        console.log("Fetched data:", data);
-  
-        // Update badge states with Firestore data
-        setMacLabBadge(data.MacLab || false);
-        setStudioABadge(data.Studio_A || false);
-        setStudioBBadge(data.Studio_B || false);
-      } else {
-        console.log("Doc doesnt exist");
-      }
-    } catch (error) {
-      console.error("Error fetching badge data:", error);
-    }
-  };
-
-  async function updateBadgeData(field, value) {
-    try {
-      const userDocRef = doc(db, "PROFILES", firebase_auth.currentUser.email);
-      await setDoc(userDocRef, { [field]: value }, { merge: true });
-  
-      console.log(`${field} updated to:`, value);
-    } catch (error) {
-      console.error(`Error updating ${field}:`, error);
-    }
+  async function changeUsername() {
+    const cityRef = doc(db, 'PROFILES', firebase_auth.currentUser.email);
+    setDoc(cityRef, { username: username }, { merge: true });
+    
   }
 
-  
+
   useEffect(() => {
-    fetchBadgeData(); // Fetch badge data from Firestore on component load
-    console.log(firebase_auth.currentUser.email)
-  }, [route.params?.data]);
-  
+    const loadScannedItems = async () => {
+      try {
+        const storedItems = await AsyncStorage.getItem('scannedItems');
+        if (storedItems) {
+          setScannedItems(JSON.parse(storedItems)); // Parse and set the data
+        }
+      } catch (error) {
+        console.error("Error loading scanned items:", error);
+      }
+    };
+
+    loadScannedItems();
+  }, []);
+
   useEffect(() => {
     if (route.params?.data) {
       const newItem = route.params.data;
   
       // Check if the new item is 'Studio A' and toggle the studioABadge boolean
       if (newItem === 'Studio A') {
-        // setStudioABadge(true);
-        updateBadgeData("Studio_A", true); // Save to Firestore
-      }else if (newItem === 'Studio B') {
-        // setStudioBBadge(true);
-        updateBadgeData("Studio_B", true); // Save to Firestore
-      }else if (newItem === 'Mac Lab') {
-        // setMacLabBadge(true);
-        updateBadgeData("MacLab", true); // Save to Firestore
+        setStudioABadge(true);
+        console.log(studioABadge) // Toggle the boolean value
       }
-      
+      if (newItem === 'Studio B') {
+        setStudioBBadge(true);
+        console.log(studioBBadge) // Toggle the boolean value
+      }
+      if (newItem === 'Mac Lab') {
+        setMacLabBadge(true);
+        console.log(macLabBadge) // Toggle the boolean value
+      }
   
-      // if (!scannedItems.includes(newItem)) {
-      //   const updatedItems = [...scannedItems, newItem];
-      //   setScannedItems(updatedItems);
+      if (!scannedItems.includes(newItem)) {
+        const updatedItems = [...scannedItems, newItem];
+        setScannedItems(updatedItems);
   
-      //   // Save updated items to AsyncStorage
-      //   AsyncStorage.setItem('scannedItems', JSON.stringify(updatedItems))
-      //     .catch((error) => console.error("Error saving scanned items:", error));
-      // }
-      fetchBadgeData
+        // Save updated items to AsyncStorage
+        AsyncStorage.setItem('scannedItems', JSON.stringify(updatedItems))
+          .catch((error) => console.error("Error saving scanned items:", error));
+      }
     }
   }, [route.params?.data]);
+  
+
+  const resetScans = async () => {
+    try {
+      await AsyncStorage.removeItem('scannedItems'); // Clear storage
+      setScannedItems([]); // Clear local state
+    } catch (error) {
+      console.error("Error resetting scanned items:", error);
+    }
+  };
 
 
   return (
@@ -124,24 +115,15 @@ export default function CollectionList({ route, navigation }) {
       {pfp && <Image source={{ uri: pfp }} style={{ width: 200, height: 200, borderRadius: 100, }} />}
       </View>
       <Button title="Edit Profile Picture" onPress={pickImage} />
-      <Text>{username}</Text>
-
-      <SafeAreaView style={{flexDirection: 'row', marginTop: '10%'}}>
-        {/* <Text>Studio A Badge: {studioABadge ? 'Unlocked' : 'Locked'}</Text> */}
-        <Image source={studioABadge ? require('../../assets/studioABadge.png') : require('../../assets/studioABadgeLocked.png')} style={{width: 100, height: 90,}}/>
-        {/* <Text>Studio B Badge: {studioBBadge ? 'Unlocked' : 'Locked'}</Text> */}
-        <Image source={studioBBadge ? require('../../assets/studioBBadge.png') : require('../../assets/studioBBadgeLocked.png')} style={{width: 110, height: 100,}}/>
-        {/* <Text>Mac Lab Badge: {macLabBadge ? 'Unlocked' : 'Locked'}</Text> */}
-        <Image source={macLabBadge ? require('../../assets/macLabBadge.png') : require('../../assets/macLabBadgeLocked.png')} style={{width: 100, height: 100,}}/>
-      </SafeAreaView>
-      <SafeAreaView style={{flexDirection: 'row', marginTop: '10%'}}>
-        <Text style={styles.badgeText}>Studio A Badge</Text>
-        {/* <Image source={studioABadge ? require('../../assets/studioABadge.png') : require('../../assets/studioABadgeLocked.png')} style={{width: 100, height: 90,}}/> */}
-        <Text style={styles.badgeText}>Studio B Badge</Text>
-        {/* <Image source={studioABadge ? require('../../assets/studioBBadge.png') : require('../../assets/studioBBadgeLocked.png')} style={{width: 110, height: 100,}}/> */}
-        <Text style={styles.badgeText}>Mac Lab Badge</Text>
-        {/* <Image source={studioABadge ? require('../../assets/macLabBadge.png') : require('../../assets/macLabBadgeLocked.png')} style={{width: 100, height: 100,}}/> */}
-      </SafeAreaView>
+      <TextInput
+        //style={styles.button}
+        
+        placeholder='add a comment'
+        placeholderTextColor="#aaa"
+        onChangeText={newText => setUsername(newText)}
+        defaultValue={username}
+      />
+      <Button title="Edit Name" onPress={changeUsername}/>
 
       <FlatList
         data={scannedItems}
@@ -152,18 +134,20 @@ export default function CollectionList({ route, navigation }) {
           </TouchableOpacity>
         )}
       />
-      
+      <Text>Studio A Badge: {studioABadge ? 'Unlocked' : 'Locked'}</Text>
+      <Text>Studio B Badge: {studioBBadge ? 'Unlocked' : 'Locked'}</Text>
+      <Text>Mac Lab Badge: {macLabBadge ? 'Unlocked' : 'Locked'}</Text>
+
       <TouchableOpacity
         onPress={() => navigation.navigate('Camera')}
         style={[styles.resetButton, { backgroundColor: 'green' }]}
       >
         <Text style={styles.buttonText}>Back to Scanner</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => firebase_auth.signOut()}
-        style={[styles.resetButton, { backgroundColor: 'red' }]}
-      >
-        <Text style={styles.buttonText}>Sign Out</Text>
+
+      {/* New Clear Data Button */}
+      <TouchableOpacity onPress={resetScans} style={[styles.resetButton, { backgroundColor: 'red' }]}>
+        <Text style={styles.buttonText}>Clear All Data</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -208,8 +192,4 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     borderRadius: 5,
   },
-  badgeText:{
-    paddingHorizontal: 15,
-    fontFamily: 'DinRegular',
-  }
 });
