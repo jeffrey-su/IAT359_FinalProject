@@ -1,8 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, TextInput, Image } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import { StatusBar } from "expo-status-bar";
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  View,
+  TouchableOpacity,
+  TextInput,
+  Image,
+} from "react-native";
+import React, { useState, useEffect } from "react";
 import { db } from "../firebaseConfig";
-import { and, collection, doc, getDocs, query, setDoc, where,} from "firebase/firestore";
+import {
+  and,
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 
 import {
   createUserWithEmailAndPassword,
@@ -11,9 +27,8 @@ import {
 import { firebase_auth } from "../firebaseConfig";
 
 export default function LoginScreen({ navigation }) {
-
-  const [inputtedEmail, setInputtedEmail] = useState('');
-  const [inputtedPassword, setInputtedPassword] = useState('');
+  const [inputtedEmail, setInputtedEmail] = useState("");
+  const [inputtedPassword, setInputtedPassword] = useState("");
   const auth = firebase_auth;
 
   const handleSignUp = async () => {
@@ -30,26 +45,29 @@ export default function LoginScreen({ navigation }) {
       alert(error.message);
       console.log(firebase.apps);
     }
-    createAcountDetails()
+    createAcountDetails();
   };
 
   async function createAcountDetails() {
     try {
-        await setDoc(doc(db, "PROFILES", inputtedEmail.toLowerCase()), {
-          username:inputtedEmail,
-          Studio_A: false,
-          Studio_B: false,
-          MacLab: false,
-        });
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
-
+      await setDoc(doc(db, "PROFILES", inputtedEmail.toLowerCase()), {
+        username: inputtedEmail,
+        Studio_A: false,
+        Studio_B: false,
+        MacLab: false,
+      });
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   }
 
   const handleSignIn = async () => {
     try {
-      const response = await signInWithEmailAndPassword(auth, inputtedEmail, inputtedPassword);
+      const response = await signInWithEmailAndPassword(
+        auth,
+        inputtedEmail,
+        inputtedPassword
+      );
       console.log(response);
     } catch (error) {
       console.log(error.message);
@@ -59,75 +77,80 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{flexDirection: 'row'}}>
-        <Image source={require('../../assets/logo.png')} style={styles.logo}/>
-      <Text style={[{fontSize: 35, padding: 30, color: '#fff', fontFamily: 'CountachRegular',}]}>SFU {'\n'}GEOCACHING </Text>
+      <View style={{ flexDirection: "row" }}>
+        <Image source={require("../../assets/logo.png")} style={styles.logo} />
+        <Text
+          style={[
+            {
+              fontSize: 35,
+              padding: 30,
+              color: "#fff",
+              fontFamily: "CountachRegular",
+            },
+          ]}
+        >
+          SFU {"\n"}GEOCACHING{" "}
+        </Text>
       </View>
-        
-      
+
       <TextInput
         style={styles.input}
-        placeholder='Email'
+        placeholder="Email"
         placeholderTextColor="#aaa"
-        onChangeText={newText => setInputtedEmail(newText)}
+        onChangeText={(newText) => setInputtedEmail(newText)}
         defaultValue={inputtedEmail}
-        inputMode = "email"
+        inputMode="email"
       />
       <TextInput
         style={styles.input}
         secureTextEntry={true}
-        placeholder='Password'
+        placeholder="Password"
         placeholderTextColor="#aaa"
-        onChangeText={newText => setInputtedPassword(newText)}
+        onChangeText={(newText) => setInputtedPassword(newText)}
         defaultValue={inputtedPassword}
       />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleSignIn}
-      >
-        <Text style={[{color: '#fff'}]} >Log In</Text>
+      <TouchableOpacity style={styles.button} onPress={handleSignIn}>
+        <Text style={[{ color: "#fff" }]}>Log In</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={handleSignUp}
-      >
-        <Text style={[{color: '#fff'}]}>Create an account</Text>
+      <TouchableOpacity onPress={handleSignUp}>
+        <Text style={[{ color: "#fff" }]}>Create an account</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  font:{
-    fontFamily: 'CountachRegular'
+  font: {
+    fontFamily: "CountachRegular",
   },
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#cc0633',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#cc0633",
   },
-  button: { 
-    maxWidth: '100%',
-    minWidth: '80%',
+  button: {
+    maxWidth: "100%",
+    minWidth: "80%",
     padding: 10,
     marginVertical: 10,
-    backgroundColor: '#000',
+    backgroundColor: "#000",
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: "center",
   },
   input: {
-    width: '80%',
+    width: "80%",
     height: 40,
     margin: 12,
     padding: 10,
     backgroundColor: "#fff",
     borderRadius: 7,
   },
-  logo:{
-    marginTop: 30, 
-    marginLeft: -30, 
-    marginRight: -20, 
-    width: 60, 
+  logo: {
+    marginTop: 30,
+    marginLeft: -30,
+    marginRight: -20,
+    width: 60,
     height: 60,
-  }
+  },
 });
